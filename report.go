@@ -22,7 +22,7 @@ import (
 	"text/template"
 
 	"k8s.io/klog/v2"
-	"github.com/google/go-licenses/licenses"
+	"github.com/jingyuanliang/go-licenses/licenses"
 	"github.com/spf13/cobra"
 )
 
