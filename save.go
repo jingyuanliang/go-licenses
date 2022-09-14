@@ -82,6 +82,8 @@ func saveMain(_ *cobra.Command, args []string) error {
 		return err
 	}
 
+	klog.Warning(libs)
+
 	// Check that the save path doesn't exist, otherwise it'd end up with a mix of
 	// existing files and the output of this command.
 	if d, err := os.Open(savePath); err == nil {
