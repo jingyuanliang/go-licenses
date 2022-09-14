@@ -296,5 +296,6 @@ func isStdLib(pkg *packages.Package) bool {
 	if len(pkg.GoFiles) == 0 {
 		return false
 	}
+	klog.Warning(build.Default.GOROOT)
 	return strings.HasPrefix(pkg.GoFiles[0], build.Default.GOROOT)
 }
