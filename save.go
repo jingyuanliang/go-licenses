@@ -64,6 +64,8 @@ func init() {
 
 func saveMain(_ *cobra.Command, args []string) error {
 
+	klog.Warning("saveMain")
+
 	if overwriteSavePath {
 		if err := os.RemoveAll(savePath); err != nil {
 			return err
