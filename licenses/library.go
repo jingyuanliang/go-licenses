@@ -70,6 +70,8 @@ func Libraries(ctx context.Context, classifier Classifier, ignoredPaths []string
 		return nil, err
 	}
 
+	klog.Warning(rootPkgs)
+
 	pkgs := map[string]*packages.Package{}
 	pkgsByLicense := make(map[string][]*packages.Package)
 	pkgErrorOccurred := false
@@ -126,6 +128,8 @@ func Libraries(ctx context.Context, classifier Classifier, ignoredPaths []string
 	if otherErrorOccurred {
 		return nil, fmt.Errorf("some errors occurred when loading direct and transitive dependency packages")
 	}
+
+	klog.Warning(pkgsByLicense)
 
 	var libraries []*Library
 	for licensePath, pkgs := range pkgsByLicense {
