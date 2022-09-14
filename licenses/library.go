@@ -79,15 +79,18 @@ func Libraries(ctx context.Context, classifier Classifier, ignoredPaths []string
 	packages.Visit(rootPkgs, func(p *packages.Package) bool {
 		if len(p.Errors) > 0 {
 			pkgErrorOccurred = true
+			klog.Warning("exit")
 			return false
 		}
 		if isStdLib(p) {
 			// No license requirements for the Go standard library.
+			klog.Warning("exit")
 			return false
 		}
 		for _, i := range ignoredPaths {
 			if strings.HasPrefix(p.PkgPath, i) {
 				// Marked to be ignored.
+				klog.Warning("exit")
 				return true
 			}
 		}
@@ -105,11 +108,13 @@ func Libraries(ctx context.Context, classifier Classifier, ignoredPaths []string
 			pkgDir = filepath.Dir(p.OtherFiles[0])
 		default:
 			// This package is empty - nothing to do.
+			klog.Warning("exit")
 			return true
 		}
 		if p.Module == nil {
 			otherErrorOccurred = true
 			klog.Errorf("Package %s does not have module info. Non go modules projects are no longer supported. For feedback, refer to https://github.com/jingyuanliang/go-licenses/issues/128.", p.PkgPath)
+			klog.Warning("exit")
 			return false
 		}
 		licensePath, err := Find(pkgDir, p.Module.Dir, classifier)
@@ -118,6 +123,7 @@ func Libraries(ctx context.Context, classifier Classifier, ignoredPaths []string
 		}
 		pkgs[p.PkgPath] = p
 		pkgsByLicense[licensePath] = append(pkgsByLicense[licensePath], p)
+		klog.Warning("got")
 		return true
 	}, nil)
 	if pkgErrorOccurred {
